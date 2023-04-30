@@ -1,8 +1,14 @@
-export const ImageGalleryItem = (id, image, bigImage) => {
-  console.log('what elem gets: ', image);
+import { PropTypes } from 'prop-types';
+
+export const ImageGalleryItem = ({ webformatURL, largeImageURL }) => {
   return (
     <li className="gallery-item">
-      <img src={image} alt="f" />
+      <img src={webformatURL} alt="f" />
     </li>
   );
+};
+
+ImageGalleryItem.propTypes = {
+  webformatURL: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
 };

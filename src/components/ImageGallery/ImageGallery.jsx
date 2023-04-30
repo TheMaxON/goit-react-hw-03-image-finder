@@ -21,16 +21,14 @@ class ImageGallery extends Component {
     }
   }
   render() {
-    console.log(this.state);
     return (
       <ul className="gallery">
-        {this.state.photos.map(({ id, webformatURL, largeImageURL }) => {
+        {this.state.photos.map(photo => {
           return (
             <ImageGalleryItem
-              key={id}
-              //   id={id}
-              webformatURL={webformatURL}
-              largeImageURL={largeImageURL}
+              key={photo.id}
+              webformatURL={photo.webformatURL}
+              largeImageURL={photo.largeImageURL}
             />
           );
         })}

@@ -37,6 +37,7 @@ class ImageGallery extends Component {
         })
         .then(res => {
           const photos = res.hits;
+          console.log(photos);
           return this.setState({ photos, status: 'resolved' });
         })
         .catch(error => {
@@ -47,12 +48,10 @@ class ImageGallery extends Component {
     }
   }
 
-  loadMore() {
-    console.log('hello');
-    this.setState(prevState => ({
-      page: prevState.page + 1,
-    }));
-  }
+  loadMore = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+    console.log('page added');
+  };
 
   pageDefault() {
     this.setState({ page: 1 });
@@ -87,7 +86,7 @@ class ImageGallery extends Component {
               );
             })}
           </ImagesGrid>
-          <Button onClick={this.loadMore} />
+          <Button clickHandler={this.loadMore} />
         </>
       );
     }

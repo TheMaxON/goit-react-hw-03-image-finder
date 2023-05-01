@@ -1,10 +1,18 @@
 import { PropTypes } from 'prop-types';
 import { Image } from './ImageGalleryItem.styled';
 
-export const ImageGalleryItem = ({ webformatURL, largeImageURL }) => {
+export const ImageGalleryItem = ({
+  webformatURL,
+  largeImageURL,
+  toggleModal,
+  imageName,
+}) => {
   return (
-    <li className="gallery-item">
-      <Image src={webformatURL} alt="f" />
+    <li
+      className="gallery-item"
+      onClick={() => toggleModal(largeImageURL, imageName)}
+    >
+      <Image src={webformatURL} loading="lazy" alt={imageName} />
     </li>
   );
 };

@@ -4,7 +4,7 @@ export const Header = styled.header`
   width: 100%;
   height: 60px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   border-bottom: 3px solid var(--color-primary);
 `;
@@ -28,7 +28,7 @@ export const Button = styled.button`
 export const Input = styled.input`
   border: none;
   outline: none;
-  padding: 7px;
+  padding: 7px 18px;
   color: var(--color-text);
   background-color: transparent;
   font-size: 16px;

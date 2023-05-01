@@ -1,8 +1,15 @@
 import { React, Component } from 'react';
+import { Triangle } from 'react-loader-spinner';
 import api from '../../api/api';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import { Button } from '../Button/Button';
-import { ImagesGrid } from './ImageGallery.styled';
+import {
+  ImagesGrid,
+  IdlePlaceholder,
+  LoaderContainer,
+  LoaderText,
+} from './ImageGallery.styled.jsx';
+import { Section } from '../Section/Section';
 
 class ImageGallery extends Component {
   state = {
@@ -12,17 +19,17 @@ class ImageGallery extends Component {
     page: 1,
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, _) {
     if (prevProps.query !== this.props.query) {
-      return this.fetchPhotos();
-    }
-    if (prevState.page !== this.state.page) {
-      return this.fetchPhotos();
+      console.log('query changed');
+      this.clearPage();
+      this.fetchPhotos();
     }
   }
 
-  fetchPhotos() {
-    this.setState({ status: 'pending' });
+  fetchPhotos = () => {
+    console.log('length, pages', this.state.photos.length, this.state.page);
+
     const query = this.props.query;
     const { page } = this.state;
 
@@ -37,8 +44,13 @@ class ImageGallery extends Component {
         })
         .then(res => {
           const photos = res.hits;
-          console.log(photos);
-          return this.setState({ photos, status: 'resolved' });
+
+          this.pageIncrement();
+
+          return this.setState(prevState => ({
+            photos: [...prevState.photos, ...photos],
+            status: 'resolved',
+          }));
         })
         .catch(error => {
           return this.setState({ error, status: 'rejected' });
@@ -46,26 +58,46 @@ class ImageGallery extends Component {
     } catch (error) {
       return this.setState({ error });
     }
-  }
-
-  loadMore = () => {
-    this.setState(prevState => ({ page: prevState.page + 1 }));
-    console.log('page added');
   };
 
-  pageDefault() {
-    this.setState({ page: 1 });
-  }
+  pageIncrement = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
+  };
+
+  clearPage = () => {
+    console.log('clear worked');
+    return this.setState({
+      photos: [],
+      status: 'pending',
+      error: null,
+      page: 1,
+    });
+  };
 
   render() {
     const { photos, status } = this.state;
 
     if (status === 'idle') {
-      return <h1>Enter your prompt</h1>;
+      return <IdlePlaceholder>Let's find your photos!</IdlePlaceholder>;
     }
 
     if (status === 'pending') {
-      return <h1>Loading...</h1>;
+      return (
+        <LoaderContainer>
+          <Triangle
+            height="170"
+            width="170"
+            color="var(--color-text-secondary)"
+            ariaLabel="triangle-loading"
+            wrapperStyle={{}}
+            wrapperClassName=""
+            visible={true}
+          />
+          <LoaderText>Loading...</LoaderText>
+        </LoaderContainer>
+      );
     }
 
     if (status === 'rejected') {
@@ -75,18 +107,24 @@ class ImageGallery extends Component {
     if (status === 'resolved') {
       return (
         <>
-          <ImagesGrid>
-            {photos.map(photo => {
-              return (
-                <ImageGalleryItem
-                  key={photo.id}
-                  webformatURL={photo.webformatURL}
-                  largeImageURL={photo.largeImageURL}
-                />
-              );
-            })}
-          </ImagesGrid>
-          <Button clickHandler={this.loadMore} />
+          <Section>
+            <ImagesGrid>
+              {photos.map(photo => {
+                return (
+                  <ImageGalleryItem
+                    key={photo.id}
+                    webformatURL={photo.webformatURL}
+                    largeImageURL={photo.largeImageURL}
+                    imageName={photo.tags}
+                    toggleModal={this.props.toggleModal}
+                  />
+                );
+              })}
+            </ImagesGrid>
+          </Section>
+          <Section>
+            <Button fetchPhotos={this.fetchPhotos} />
+          </Section>
         </>
       );
     }

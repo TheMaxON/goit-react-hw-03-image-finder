@@ -1,7 +1,9 @@
+import { ButtonStyled } from './Button.styled.jsx';
+
 export const Button = props => {
   return (
-    <button type="button" onClick={props.clickHandler}>
+    <ButtonStyled type="button" onClick={props.fetchPhotos}>
       <span>Load more</span>
-    </button>
+    </ButtonStyled>
   );
 };

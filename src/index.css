@@ -5,7 +5,7 @@
   --color-primary: #d8d8f2;
   --color-accent: #f1333a;
   --color-secondary: #94f6db;
-  --color-text: #02060c;
+  --color-text: #0a1a33;
   --color-text-secondary: #3e12ac;
 }
 
@@ -20,6 +20,8 @@ ul {
 }
 
 body {
+  width: 100%;
+  min-height: 100vh;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',

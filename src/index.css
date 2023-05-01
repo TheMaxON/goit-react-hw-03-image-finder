@@ -1,5 +1,24 @@
 @import-normalize; /* bring in normalize.css styles */
 
+:root {
+  --color-background: #f8ffff;
+  --color-primary: #d8d8f2;
+  --color-accent: #f1333a;
+  --color-secondary: #94f6db;
+  --color-text: #02060c;
+  --color-text-secondary: #3e12ac;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,6 +26,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-background);
 }
 
 code {

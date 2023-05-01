@@ -1,7 +1,7 @@
 import { React, Component } from 'react';
+import { Section } from './Section/Section';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
-import { Button } from './Button/Button';
 
 class App extends Component {
   state = {
@@ -14,9 +14,12 @@ class App extends Component {
   render() {
     return (
       <>
-        <Searchbar onSubmit={this.onSubmit} />
-        <ImageGallery query={this.state.searchQuery} />
-        <Button />
+        <Section>
+          <Searchbar onSubmit={this.onSubmit} />
+        </Section>
+        <Section>
+          <ImageGallery query={this.state.searchQuery} />
+        </Section>
       </>
     );
   }

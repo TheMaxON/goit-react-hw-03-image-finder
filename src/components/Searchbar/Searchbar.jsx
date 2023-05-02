@@ -1,6 +1,7 @@
 import { React, Component } from 'react';
+import { toast } from 'react-toastify';
 import { BiSearchAlt2 } from 'react-icons/bi';
-// import { propTypes } from 'prop-types';
+import { PropTypes } from 'prop-types';
 import { Header, Form, Button, Input } from './Searchbar.styled.jsx';
 
 class Searchbar extends Component {
@@ -17,7 +18,7 @@ class Searchbar extends Component {
     const query = this.state.query.toLowerCase();
     event.preventDefault();
     if (query.trim() === '') {
-      return console.log('query is empty');
+      return toast.warning('Please enter your request', { theme: 'dark' });
     }
     onSubmit(query);
     this.setState({ query: '' });
@@ -26,7 +27,7 @@ class Searchbar extends Component {
     return (
       <Header>
         <Form onSubmit={this.handleSubmit}>
-          <Button type="submit" aria className="button">
+          <Button type="submit" aria-label="Search" className="button">
             <BiSearchAlt2 style={{ width: 20, height: 20 }} />
           </Button>
 
@@ -46,3 +47,7 @@ class Searchbar extends Component {
 }
 
 export default Searchbar;
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

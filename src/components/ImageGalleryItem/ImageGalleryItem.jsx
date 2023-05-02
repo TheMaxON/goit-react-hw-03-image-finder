@@ -20,4 +20,6 @@ export const ImageGalleryItem = ({
 ImageGalleryItem.propTypes = {
   webformatURL: PropTypes.string.isRequired,
   largeImageURL: PropTypes.string.isRequired,
+  imageName: PropTypes.string.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };

@@ -1,4 +1,5 @@
 import { React, Component } from 'react';
+import { PropTypes } from 'prop-types';
 import { ModalBackgrop, ModalStyled } from './Modal.styled';
 
 class Modal extends Component {
@@ -35,3 +36,8 @@ class Modal extends Component {
 }
 
 export default Modal;
+
+Modal.propTypes = {
+  image: PropTypes.string.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+};

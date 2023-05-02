@@ -1,4 +1,6 @@
 import { React, Component } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Section } from './Section/Section';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
@@ -37,6 +39,7 @@ class App extends Component {
         {this.state.showModal && (
           <Modal image={this.state.modalImage} toggleModal={this.toggleModal} />
         )}
+        <ToastContainer />
       </>
     );
   }

@@ -1,14 +1,10 @@
 import { React, Component } from 'react';
-import { Triangle } from 'react-loader-spinner';
+import { PropTypes } from 'prop-types';
 import api from '../../api/api';
+import Loader from '../Loader/Loader';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import { Button } from '../Button/Button';
-import {
-  ImagesGrid,
-  IdlePlaceholder,
-  LoaderContainer,
-  LoaderText,
-} from './ImageGallery.styled.jsx';
+import { ImagesGrid, IdlePlaceholder } from './ImageGallery.styled.jsx';
 import { Section } from '../Section/Section';
 
 class ImageGallery extends Component {
@@ -21,15 +17,19 @@ class ImageGallery extends Component {
 
   componentDidUpdate(prevProps, _) {
     if (prevProps.query !== this.props.query) {
-      console.log('query changed');
-      this.clearPage();
-      this.fetchPhotos();
+      this.setState(
+        {
+          page: 1,
+        },
+        () => {
+          this.clearPage();
+          this.fetchPhotos();
+        }
+      );
     }
   }
 
   fetchPhotos = () => {
-    console.log('length, pages', this.state.photos.length, this.state.page);
-
     const query = this.props.query;
     const { page } = this.state;
 
@@ -45,12 +45,12 @@ class ImageGallery extends Component {
         .then(res => {
           const photos = res.hits;
 
-          this.pageIncrement();
-
-          return this.setState(prevState => ({
+          this.setState(prevState => ({
             photos: [...prevState.photos, ...photos],
             status: 'resolved',
           }));
+
+          return this.pageIncrement();
         })
         .catch(error => {
           return this.setState({ error, status: 'rejected' });
@@ -67,12 +67,10 @@ class ImageGallery extends Component {
   };
 
   clearPage = () => {
-    console.log('clear worked');
-    return this.setState({
+    this.setState({
       photos: [],
       status: 'pending',
       error: null,
-      page: 1,
     });
   };
 
@@ -84,20 +82,7 @@ class ImageGallery extends Component {
     }
 
     if (status === 'pending') {
-      return (
-        <LoaderContainer>
-          <Triangle
-            height="170"
-            width="170"
-            color="var(--color-text-secondary)"
-            ariaLabel="triangle-loading"
-            wrapperStyle={{}}
-            wrapperClassName=""
-            visible={true}
-          />
-          <LoaderText>Loading...</LoaderText>
-        </LoaderContainer>
-      );
+      return <Loader />;
     }
 
     if (status === 'rejected') {
@@ -132,3 +117,8 @@ class ImageGallery extends Component {
 }
 
 export default ImageGallery;
+
+ImageGallery.propTypes = {
+  query: PropTypes.string.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+};

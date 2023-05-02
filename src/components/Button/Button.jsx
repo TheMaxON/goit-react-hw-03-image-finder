@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import { ButtonStyled } from './Button.styled.jsx';
 
 export const Button = props => {
@@ -6,4 +7,8 @@ export const Button = props => {
       <span>Load more</span>
     </ButtonStyled>
   );
+};
+
+Button.propTypes = {
+  fetchPhotos: PropTypes.func.isRequired,
 };

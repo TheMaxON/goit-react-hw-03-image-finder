@@ -3,9 +3,12 @@ import styled from '@emotion/styled';
 export const Header = styled.header`
   width: 100%;
   height: 60px;
+  position: fixed;
+  top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--color-background);
   border-bottom: 3px solid var(--color-primary);
 `;
 

@@ -1,7 +1,7 @@
 import { React, Component } from 'react';
+import { PropTypes } from 'prop-types';
 import { toast } from 'react-toastify';
 import { BiSearchAlt2 } from 'react-icons/bi';
-import { PropTypes } from 'prop-types';
 import { Header, Form, Button, Input } from './Searchbar.styled.jsx';
 
 class Searchbar extends Component {
@@ -14,15 +14,17 @@ class Searchbar extends Component {
   };
 
   handleSubmit = event => {
+    event.preventDefault();
     const { onSubmit } = this.props;
     const query = this.state.query.toLowerCase();
-    event.preventDefault();
+
     if (query.trim() === '') {
-      return toast.warning('Please enter your request', { theme: 'dark' });
+      return toast.warning('Please enter your request.', { theme: 'dark' });
     }
     onSubmit(query);
     this.setState({ query: '' });
   };
+
   render() {
     return (
       <Header>

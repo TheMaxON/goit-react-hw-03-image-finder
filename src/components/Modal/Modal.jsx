@@ -12,23 +12,27 @@ class Modal extends Component {
   }
 
   handleESC = e => {
+    const { onCloseModal } = this.props;
+
     if (e.code === 'Escape') {
-      this.props.toggleModal();
+      onCloseModal();
     }
   };
 
   handleBackdropClick = e => {
+    const { onCloseModal } = this.props;
+
     if (e.currentTarget === e.target) {
-      this.props.toggleModal();
+      onCloseModal();
     }
   };
 
   render() {
-    const { image } = this.props;
+    const { modalImage, tags } = this.props;
     return (
       <ModalBackgrop onClick={this.handleBackdropClick}>
         <div className="modal">
-          <ModalStyled src={image} loading="lazy" alt="Fullscreen image" />
+          <ModalStyled src={modalImage} loading="lazy" alt={tags} />
         </div>
       </ModalBackgrop>
     );
@@ -38,6 +42,7 @@ class Modal extends Component {
 export default Modal;
 
 Modal.propTypes = {
-  image: PropTypes.string.isRequired,
-  toggleModal: PropTypes.func.isRequired,
+  modalImage: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+  onCloseModal: PropTypes.func.isRequired,
 };

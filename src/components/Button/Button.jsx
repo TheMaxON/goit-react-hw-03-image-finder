@@ -1,14 +1,17 @@
 import { PropTypes } from 'prop-types';
 import { ButtonStyled } from './Button.styled.jsx';
 
-export const Button = props => {
+const Button = props => {
+  const { onLoadMore } = props;
   return (
-    <ButtonStyled type="button" onClick={props.fetchPhotos}>
+    <ButtonStyled type="button" onClick={onLoadMore}>
       <span>Load more</span>
     </ButtonStyled>
   );
 };
 
+export default Button;
+
 Button.propTypes = {
-  fetchPhotos: PropTypes.func.isRequired,
+  onLoadMore: PropTypes.func.isRequired,
 };
